@@ -54,15 +54,39 @@ def coqa_formatter_hf(
             logger.info(f"Loading cached dataset from {caching_path}")
             try:
                 merged_datasetdict = datasets.load_from_disk(caching_path)
-                return merged_datasetdict
-            except:
+
+                # quick sanity-check: ensure cached data contains the processed fields
+                # and that they are not None. Older caches could
+                # include raw examples without these fields, causing downstream
+                # failures (e.g., `int(None)`).
+                def _cache_is_valid(ds_dict):
+                    for split in ds_dict.keys():
+                        if len(ds_dict[split]) == 0:
+                            continue
+                        sample = ds_dict[split][0]
+                        if sample.get("answer_token_start_idx") is None:
+                            return False
+                    return True
+
+                if _cache_is_valid(merged_datasetdict):
+                    return merged_datasetdict
+                else:
+                    logger.warning(
+                        f"Cached dataset at {caching_path} is obsolete (missing valid answer_token_start_idx); regenerating."
+                    )
+            except Exception as e:
                 logger.warning(
-                    f"Failed to load cached dataset from {caching_path}, need regeneration"
+                    f"Failed to load cached dataset from {caching_path} due to {e}, need regeneration"
                 )
 
     # here we manually add "id" column to the dataset based on the "story"
+    # Add a unique 'id' field to each record by computing SHA-256 hash of the 'story' field
+    # This ensures consistent IDs for identical stories while converting variable-length text to fixed-length identifiers
     dd = dd.map(lambda x: {"id": sha256(x["story"].encode()).hexdigest()})
 
+    # Iterate over each split in the dataset
+    # ds_key: train, validation, test
+    # ds: dataset for the split
     for ds_key, ds in dd.items():
         merged_datasets[ds_key] = []
 
@@ -118,8 +142,10 @@ def coqa_formatter_hf(
                     merged_datasets[ds_key].append(
                         {
                             "tokenized_prompt": story + question + answer,
-                            "question_token_start_idx": question_start_idx,
-                            "answer_token_start_idx": answer_start_idx,
+                            # Record the starting position of question and answer tokens in the merged sequence
+                            # Used for extracting hidden states and computing statistics for question/answer segments
+                            "question_token_start_idx": question_start_idx,  # Index where question tokens begin
+                            "answer_token_start_idx": answer_start_idx,      # Index where answer tokens begin
                             "answer_str": answer_str,
                             "question_str": question_str,
                         }
@@ -128,8 +154,12 @@ def coqa_formatter_hf(
                 else:
                     logger.warning("no tokenizer offered, printing to stdout")
                     print(story_str + question_str + answer_str)
-                batch_cache.append(ditem)
-            merged_datasets[ds_key].append(ditem)
+            
+            # No need the following two lines, since 
+            # 1. merged_datasetdict.save_to_disk(caching_path) will save the reformmated dataset to the cache 
+            # 2. ditem is a single, original record from each split dataset 
+            #     batch_cache.append(ditem)
+            # merged_datasets[ds_key].append(ditem)
 
         merged_datasetdict = {
             ("coqa__" + k): v for k, v in merged_datasets.items()
@@ -143,7 +173,7 @@ def coqa_formatter_hf(
         )
 
         if cache:
-            merged_datasetdict.save_to_disk(caching_path)
+            merged_datasetdict.save_to_disk(caching_path) # save the dataset to the cache, so we don't need to re-process the data next time
 
         return merged_datasetdict
 
