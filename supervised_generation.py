@@ -92,8 +92,8 @@ def generate_X(
         tokenizer_path = "models/Meta-Llama-3-8B"
 
     elif model_type == "gemma_7b":
-        model_path = "models/gemma-7b"
-        tokenizer_path = "models/gemma-7b"
+        model_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
+        tokenizer_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
 
     elif model_type == "gemma_2b":
         model_path = "models/gemma-2b"
@@ -520,8 +520,8 @@ def generate_answer_most(
         tokenizer_path = "models/Meta-Llama-3-8B"
 
     elif model_type == "gemma_7b":
-        model_path = "models/gemma-7b"
-        tokenizer_path = "models/gemma-7b"
+        model_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
+        tokenizer_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
 
     model, tokenizer = load_llama2(model_path, tokenizer_path)
 
@@ -886,8 +886,8 @@ def generate_answers(model_type, dataset_name):
         model_path = "models/Meta-Llama-3-8B"
         tokenizer_path = "models/Meta-Llama-3-8B"
     elif model_type == "gemma_7b":
-        model_path = "models/gemma-7b"
-        tokenizer_path = "models/gemma-7b"
+        model_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
+        tokenizer_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
     model, tokenizer = load_llama2(model_path, tokenizer_path)
 
     hidden_state_output_dir = (
@@ -1116,8 +1116,8 @@ def generate_ask4conf(model_type, dataset_name):
         model_path = "models/Meta-Llama-3-8B"
         tokenizer_path = "models/Meta-Llama-3-8B"
     elif model_type == "gemma_7b":
-        model_path = "models/gemma-7b"
-        tokenizer_path = "models/gemma-7b"
+        model_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
+        tokenizer_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
     elif model_type == "gemma_2b":
         model_path = "models/gemma-2b"
         tokenizer_path = "models/gemma-2b"
@@ -1401,8 +1401,8 @@ def generate_query_X_mmlu(model_type, phase):
         os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
     if model_type == "gemma_7b":
-        model_path = "models/gemma-7b"
-        tokenizer_path = "models/gemma-7b"
+        model_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
+        tokenizer_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
     elif model_type == "llama_2_7b":
         model_path = "models/Llama-2-7b-hf-local"
         tokenizer_path = "models/Llama-2-7b-hf-local"
@@ -1651,8 +1651,8 @@ def generate_answer_X_mmlu(model_type, phase):
         os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
     if model_type == "gemma_7b":
-        model_path = "models/gemma-7b"
-        tokenizer_path = "models/gemma-7b"
+        model_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
+        tokenizer_path = "models/gemma-7b/models--google--gemma-7b/snapshots/ff6768d9368919a1f025a54f9f5aa0ee591730bb"
     elif model_type == "llama_2_7b":
         model_path = "models/Llama-2-7b-hf-local"
         tokenizer_path = "models/Llama-2-7b-hf-local"
