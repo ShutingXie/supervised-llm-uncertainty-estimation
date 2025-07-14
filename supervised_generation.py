@@ -337,8 +337,8 @@ def generate_X(
         if torch.sum(torch.abs(answer_entropy_output_tensor[data_i])) > 0:
             continue
 
-        q_begin = d[Q_BEGIN]
-        q_end = d[Q_END]
+        q_begin = int(d[Q_BEGIN])
+        q_end = int(d[Q_END])
         a_begin = q_end - 1
         a_end = q_end + len(tokenized_answers[data_i])
         query_prompt_token = d[PROMPT_TOKENS][:q_end]
@@ -684,9 +684,9 @@ def generate_answer_most(
             if GREEDY in d:
                 continue
 
-            input_length = d[Q_END]
+            input_length = int(d[Q_END])
 
-            prompt_tokens = d[PROMPT_TOKENS][: d[Q_END]]
+            prompt_tokens = d[PROMPT_TOKENS][: int(d[Q_END])]
 
             prompt_tokens = (
                 torch.tensor(prompt_tokens).to(model.device).unsqueeze(0)
@@ -1050,9 +1050,9 @@ def generate_answers(model_type, dataset_name):
             if (ANSWERS in d) and len(d[ANSWERS]) > 0:
                 continue
 
-            input_length = d[Q_END]
+            input_length = int(d[Q_END])
             data_extend[data_i][ANSWERS] = []
-            prompt_tokens = d[PROMPT_TOKENS][: d[Q_END]]
+            prompt_tokens = d[PROMPT_TOKENS][: int(d[Q_END])]
             prompt_tokens = (
                 torch.tensor(prompt_tokens).to(model.device).unsqueeze(0)
             )
@@ -1566,8 +1566,8 @@ def generate_query_X_mmlu(model_type, phase):
             # forward and get features of the query
             for data_i, d in tqdm(enumerate(data)):
 
-                q_begin = d[Q_BEGIN]
-                q_end = d[Q_END]
+                q_begin = int(d[Q_BEGIN])
+                q_end = int(d[Q_END])
                 prompt_token = d[PROMPT_TOKENS][:q_end]
 
                 # convert prompt_token to tensor
@@ -1786,7 +1786,7 @@ def generate_answer_X_mmlu(model_type, phase):
             data = list(data)
             for i in tqdm(range(0, len(data))):
                 d = data[i]
-                prompt_tokens = d[PROMPT_TOKENS][: d[Q_END]]
+                prompt_tokens = d[PROMPT_TOKENS][: int(d[Q_END])]
                 output_answer_X[i] = generator.generate_single(prompt_tokens)
 
             # save the result
