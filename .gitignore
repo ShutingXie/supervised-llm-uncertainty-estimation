@@ -4,3 +4,4 @@ models/
 data/
 figs/
 data_cache/
+*.DS_Store

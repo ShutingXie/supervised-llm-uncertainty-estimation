@@ -80,24 +80,24 @@ def generate_X(
     output_dir = "test_output"
 
     if model_type == "llama_2_7b":
-        model_path = "Llama-2-7b-hf-local"
-        tokenizer_path = "Llama-2-7b-hf-local"
+        model_path = "models/Llama-2-7b-hf-local"
+        tokenizer_path = "models/Llama-2-7b-hf-local"
 
     elif model_type == "llama_2_13b":
-        model_path = "Llama-2-13b-hf-local"
-        tokenizer_path = "Llama-2-13b-hf-local"
+        model_path = "models/Llama-2-13b-hf-local"
+        tokenizer_path = "models/Llama-2-13b-hf-local"
 
     elif model_type == "llama_3_8b":
-        model_path = "Llama-3-8b-hf-local"
-        tokenizer_path = "Llama-3-8b-hf-local"
+        model_path = "models/Meta-Llama-3-8B"
+        tokenizer_path = "models/Meta-Llama-3-8B"
 
     elif model_type == "gemma_7b":
-        model_path = "gemma-7b"
-        tokenizer_path = "gemma-7b"
+        model_path = "models/gemma-7b"
+        tokenizer_path = "models/gemma-7b"
 
     elif model_type == "gemma_2b":
-        model_path = "gemma-2b"
-        tokenizer_path = "gemma-2b"
+        model_path = "models/gemma-2b"
+        tokenizer_path = "models/gemma-2b"
 
     model, tokenizer = load_llama2(model_path, tokenizer_path)
     data_extend_path = (
@@ -511,15 +511,17 @@ def generate_answer_most(
 ):
     output_dir = "test_output"
 
-    if model_type == "gemma_7b":
-        model_path = "gemma-7b"
-        tokenizer_path = "gemma-7b"
-    elif model_type == "llama_2_7b":
-        model_path = "Llama-2-7b-hf-local"
-        tokenizer_path = "Llama-2-7b-hf-local"
+    if model_type == "llama_2_7b":
+        model_path = "models/Llama-2-7b-hf-local"
+        tokenizer_path = "models/Llama-2-7b-hf-local"
+
     elif model_type == "llama_3_8b":
-        model_path = "Llama-3-8b-hf-local"
-        tokenizer_path = "Llama-3-8b-hf-local"
+        model_path = "models/Meta-Llama-3-8B"
+        tokenizer_path = "models/Meta-Llama-3-8B"
+
+    elif model_type == "gemma_7b":
+        model_path = "models/gemma-7b"
+        tokenizer_path = "models/gemma-7b"
 
     model, tokenizer = load_llama2(model_path, tokenizer_path)
 
@@ -650,7 +652,7 @@ def generate_answer_most(
             "\n\n\n\n\n",
             "<eos>",
             "A:",
-            "</s><s>",
+            "стратив ",
             "\nQ",
             "\nQ:",
             "Q :",
@@ -877,17 +879,15 @@ def generate_y_most_WMT(model_type, dataset_name):
 
 def generate_answers(model_type, dataset_name):
     output_dir = "test_output"
-
-    if model_type == "gemma_7b":
-        model_path = "gemma-7b"
-        tokenizer_path = "gemma-7b"
-    elif model_type == "llama_2_7b":
-        model_path = "Llama-2-7b-hf-local"
-        tokenizer_path = "Llama-2-7b-hf-local"
+    if model_type == "llama_2_7b":
+        model_path = "models/Llama-2-7b-hf-local"
+        tokenizer_path = "models/Llama-2-7b-hf-local"
     elif model_type == "llama_3_8b":
-        model_path = "Llama-3-8b-hf-local"
-        tokenizer_path = "Llama-3-8b-hf-local"
-
+        model_path = "models/Meta-Llama-3-8B"
+        tokenizer_path = "models/Meta-Llama-3-8B"
+    elif model_type == "gemma_7b":
+        model_path = "models/gemma-7b"
+        tokenizer_path = "models/gemma-7b"
     model, tokenizer = load_llama2(model_path, tokenizer_path)
 
     hidden_state_output_dir = (
@@ -1016,7 +1016,7 @@ def generate_answers(model_type, dataset_name):
             "\n\n\n\n\n",
             "<eos>",
             "A:",
-            "</s><s>",
+            "стратив ",
             "\nQ",
             "\nQ:",
             "Q :",
@@ -1109,22 +1109,23 @@ def generate_ask4conf(model_type, dataset_name):
     )
 
     output_dir = "test_output"
-    if model_type == "gemma_7b":
-        model_path = "gemma-7b"
-        tokenizer_path = "gemma-7b"
+    if model_type == "llama_2_7b":
+        model_path = "models/Llama-2-7b-hf-local"
+        tokenizer_path = "models/Llama-2-7b-hf-local"
+    elif model_type == "llama_3_8b":
+        model_path = "models/Meta-Llama-3-8B"
+        tokenizer_path = "models/Meta-Llama-3-8B"
+    elif model_type == "gemma_7b":
+        model_path = "models/gemma-7b"
+        tokenizer_path = "models/gemma-7b"
     elif model_type == "gemma_2b":
-        model_path = "gemma-2b"
-        tokenizer_path = "gemma-2b"
-    elif model_type == "llama_2_7b":
-        model_path = "Llama-2-7b-hf-local"
-        tokenizer_path = "Llama-2-7b-hf-local"
+        model_path = "models/gemma-2b"
+        tokenizer_path = "models/gemma-2b"
     elif model_type == "llama_2_13b":
-        model_path = "Llama-2-13b-hf-local"
-        tokenizer_path = "Llama-2-13b-hf-local"
+        model_path = "models/Llama-2-13b-hf-local"
+        tokenizer_path = "models/Llama-2-13b-hf-local"
     else:
         raise NotImplementedError(f"Model {model_type} not supported")
-    model_path = "models/" + model_path
-    tokenizer_path = "models/" + tokenizer_path
     model, tokenizer = load_llama2(model_path, tokenizer_path)
     output_dir = Path(f"test_output/ask4conf/{model_type}")
 
@@ -1400,20 +1401,20 @@ def generate_query_X_mmlu(model_type, phase):
         os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
     if model_type == "gemma_7b":
-        model_path = "gemma-7b"
-        tokenizer_path = "gemma-7b"
+        model_path = "models/gemma-7b"
+        tokenizer_path = "models/gemma-7b"
     elif model_type == "llama_2_7b":
-        model_path = "Llama-2-7b-hf-local"
-        tokenizer_path = "Llama-2-7b-hf-local"
+        model_path = "models/Llama-2-7b-hf-local"
+        tokenizer_path = "models/Llama-2-7b-hf-local"
     elif model_type == "llama_3_8b":
-        model_path = "Llama-3-8b-hf-local"
-        tokenizer_path = "Llama-3-8b-hf-local"
+        model_path = "models/Meta-Llama-3-8B"
+        tokenizer_path = "models/Meta-Llama-3-8B"
     elif model_type == "gemma_2b":
-        model_path = "gemma-2b"
-        tokenizer_path = "gemma-2b"
+        model_path = "models/gemma-2b"
+        tokenizer_path = "models/gemma-2b"
     elif model_type == "llama_2_13b":
-        model_path = "Llama-2-13b-hf-local"
-        tokenizer_path = "Llama-2-13b-hf-local"
+        model_path = "models/Llama-2-13b-hf-local"
+        tokenizer_path = "models/Llama-2-13b-hf-local"
 
     model, tokenizer = load_llama2(model_path, tokenizer_path)
 
@@ -1650,20 +1651,20 @@ def generate_answer_X_mmlu(model_type, phase):
         os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 
     if model_type == "gemma_7b":
-        model_path = "gemma-7b"
-        tokenizer_path = "gemma-7b"
+        model_path = "models/gemma-7b"
+        tokenizer_path = "models/gemma-7b"
     elif model_type == "llama_2_7b":
-        model_path = "Llama-2-7b-hf-local"
-        tokenizer_path = "Llama-2-7b-hf-local"
+        model_path = "models/Llama-2-7b-hf-local"
+        tokenizer_path = "models/Llama-2-7b-hf-local"
     elif model_type == "llama_3_8b":
-        model_path = "Llama-3-8b-hf-local"
-        tokenizer_path = "Llama-3-8b-hf-local"
+        model_path = "models/Meta-Llama-3-8B"
+        tokenizer_path = "models/Meta-Llama-3-8B"
     elif model_type == "gemma_2b":
-        model_path = "gemma-2b"
-        tokenizer_path = "gemma-2b"
+        model_path = "models/gemma-2b"
+        tokenizer_path = "models/gemma-2b"
     elif model_type == "llama_2_13b":
-        model_path = "Llama-2-13b-hf-local"
-        tokenizer_path = "Llama-2-13b-hf-local"
+        model_path = "models/Llama-2-13b-hf-local"
+        tokenizer_path = "models/Llama-2-13b-hf-local"
 
     model, tokenizer = load_llama2(model_path, tokenizer_path)
 
