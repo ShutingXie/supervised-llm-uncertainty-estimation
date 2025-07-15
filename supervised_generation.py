@@ -556,7 +556,7 @@ def generate_answer_most(
     if dataset_name == "wmt__test":
         data = list(data.select(range(min(2000, data.num_rows))))
     else:
-        data = list(data.select(range(min(20000, data.num_rows))))
+        data = list(data.select(range(min(1000, data.num_rows))))
 
     # if the path not exists, then create the path
     if not os.path.exists(hidden_state_output_dir):
