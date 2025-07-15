@@ -145,7 +145,7 @@ def generate_X(
         )
         data = data[dataset_name]
     elif dataset_name.startswith("coqa"):
-        data = coqa_formatter_hf(tokenizer=tokenizer, num_example=3, cache=True)
+        data = coqa_formatter_hf(tokenizer=tokenizer, num_example=1, cache=True)
         if dataset_name.endswith("test"):
             data = data["test"]
         elif dataset_name.endswith("train"):
@@ -541,7 +541,7 @@ def generate_answer_most(
         )
         data = data[dataset_name]
     elif dataset_name.startswith("coqa"):
-        data = coqa_formatter_hf(tokenizer=tokenizer, num_example=3, cache=True)
+        data = coqa_formatter_hf(tokenizer=tokenizer, num_example=1, cache=True)
         if dataset_name.endswith("test"):
             data = data["test"]
         elif dataset_name.endswith("train"):
@@ -556,7 +556,7 @@ def generate_answer_most(
     if dataset_name == "wmt__test":
         data = list(data.select(range(min(2000, data.num_rows))))
     else:
-        data = list(data.select(range(min(1000, data.num_rows))))
+        data = list(data.select(range(min(20, data.num_rows))))
 
     # if the path not exists, then create the path
     if not os.path.exists(hidden_state_output_dir):
@@ -908,7 +908,7 @@ def generate_answers(model_type, dataset_name):
         )
         data = data[dataset_name]
     elif dataset_name.startswith("coqa"):
-        data = coqa_formatter_hf(tokenizer=tokenizer, num_example=3, cache=True)
+        data = coqa_formatter_hf(tokenizer=tokenizer, num_example=1, cache=True)
         if dataset_name.endswith("test"):
             data = data["test"]
         elif dataset_name.endswith("train"):
@@ -919,6 +919,7 @@ def generate_answers(model_type, dataset_name):
         )
         data = data[dataset_name]
 
+    # Only applies to the wmt dataset
     data = list(data.select(range(min(2000, data.num_rows))))
 
     # if the path not exists, then create the path
@@ -1131,7 +1132,7 @@ def generate_ask4conf(model_type, dataset_name):
 
     if dataset_name.startswith("coqa"):
         ds_name = "coqa"
-        dd = coqa_formatter_hf(tokenizer)
+        dd = coqa_formatter_hf(tokenizer, num_example=1)
     elif dataset_name.startswith("trivia"):
         ds_name = "triviaqa"
         dd = triviaqa_formatter(tokenizer)
