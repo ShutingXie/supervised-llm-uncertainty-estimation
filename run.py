@@ -140,7 +140,8 @@ def generate_ds(ctx: click.Context, models: Tuple[str], ds: Tuple[str]):
                 if dataset == "wmt":
                     generate_y_most_WMT(model, dataset)
                 else:
-                    generate_y_most_QA(model, dataset)
+                    # Compute ROUGE scores for the training split.
+                    generate_y_most_QA(model, dataset + "__train")
             except Exception as e:
                 logger.warning(
                     f"Failed to generate query for {model} on {dataset} when calling `generate_y_most`. Please check."

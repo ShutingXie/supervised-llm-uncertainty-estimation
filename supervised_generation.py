@@ -399,6 +399,15 @@ def generate_X(
                 outputs.logits, prompt_token, a_begin, a_end, query=False
             )
 
+        # Clean up GPU memory after model generation and tokenizer decoding
+        # to prevent memory accumulation across iterations.
+        # Similar cleanup may be needed after:
+        # 1. Large tensor operations (e.g., model.generate())
+        # 2. Data saving operations (e.g., json.dump())
+        # 3. End of major loops
+        del prompt_token, outputs, hidden_states
+        torch.cuda.empty_cache()
+
         if (data_i + 1) % STEP_SIZE == 0 or (data_i + 1) == num_queries:
             # save the hidden_states output
             for idx, layer_idx in enumerate(layer_list):
@@ -720,6 +729,15 @@ def generate_answer_most(
                     sequence = sequence[: sequence.index(word)]
                     break
             data_extend[data_i][GREEDY] = sequence
+
+            # Clean up GPU memory after model generation and tokenizer decoding
+            # to prevent memory accumulation across iterations.
+            # Similar cleanup may be needed after:
+            # 1. Large tensor operations (e.g., model.generate())
+            # 2. Data saving operations (e.g., json.dump())
+            # 3. End of major loops
+            del prompt_tokens, answer_token
+            torch.cuda.empty_cache()
 
             if (data_i + 1) % STEP_SIZE == 0 or data_i == len(data_extend) - 1:
 
