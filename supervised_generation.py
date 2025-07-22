@@ -937,8 +937,8 @@ def generate_answers(model_type, dataset_name):
         )
         data = data[dataset_name]
 
-    # Only applies to the wmt dataset
-    data = list(data.select(range(min(2000, data.num_rows))))
+    # Apply to all datasets
+    data = list(data.select(range(min(20, data.num_rows))))
 
     # if the path not exists, then create the path
     if not os.path.exists(hidden_state_output_dir):
