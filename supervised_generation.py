@@ -1285,10 +1285,10 @@ def generate_uncertainty_score(model_type, dataset_name):
     save_path = output_dir + dataset_name + "_semantic_entropy.json"
 
     entailment_tokenizer = AutoTokenizer.from_pretrained(
-        str(Path("models") / ENTAILMENT_MODEL)
+        str(Path("models") / ENTAILMENT_MODEL / "models--microsoft--deberta-large-mnli" / "snapshots" / "7296194b9009373def4f7c5dad292651e4b5cf4e")
     )
     entailment_model = AutoModelForSequenceClassification.from_pretrained(
-        str(Path("models") / ENTAILMENT_MODEL)
+        str(Path("models") / ENTAILMENT_MODEL / "models--microsoft--deberta-large-mnli" / "snapshots" / "7296194b9009373def4f7c5dad292651e4b5cf4e")
     ).cuda()
 
     with open(GENERATED_QA_LOCAL, "r") as f:
