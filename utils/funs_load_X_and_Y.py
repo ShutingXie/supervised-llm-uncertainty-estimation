@@ -922,14 +922,18 @@ def get_index_of_valid_X(dataset_name, model_type, phase="test"):
                     SU_scores.append(-SU_data[d_idx][SU_KEY])
 
     if dataset_name.startswith("triviaqa") or dataset_name.startswith("coqa"):
+        total_samples = len(available_idxs)
+        # For small samples, use half for testing and half for training
+        split_point = min(2000, total_samples // 2)
+
         if phase == "test":
-            available_idxs = available_idxs[:2000]
-            mrouges = mrouges[:2000]
+            available_idxs = available_idxs[:split_point]
+            mrouges = mrouges[:split_point]
             if has_SU:
-                SU_scores = SU_scores[:2000]
+                SU_scores = SU_scores[:split_point]
         else:
-            available_idxs = available_idxs[2000:]
-            mrouges = mrouges[2000:]
+            available_idxs = available_idxs[split_point:]
+            mrouges = mrouges[split_point:]
     if phase == "test":
         try:
             if model_type == "llama_3_8b":
@@ -946,8 +950,10 @@ def get_index_of_valid_X(dataset_name, model_type, phase="test"):
                 ask4conf_score = ask4conf_score["ask4conf_prob"]
                 # get the values from the dict ask4conf_score
                 ask4conf_score = list(ask4conf_score.values())
-                if len(ask4conf_score) > 2000:
-                    ask4conf_score = ask4conf_score[:2000]
+                # 对于小样本，限制ask4conf分数数量
+                max_samples = min(2000, len(available_idxs))
+                if len(ask4conf_score) > max_samples:
+                    ask4conf_score = ask4conf_score[:max_samples]
             else:
                 ask4conf_score = load_ask4conf_score(
                     dataset_name=dataset_name,
