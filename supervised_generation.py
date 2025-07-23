@@ -46,6 +46,8 @@ from utils.funs_load_model import (
 )
 from utils.generator_cls import MMLUGenerator
 
+DEFAULT_SAMPLE_SIZE = 200  # Global sample size limit, can be modified as needed
+
 
 class StopWordStoppingCriteria(StoppingCriteria):
     """StopWord stopping criteria."""
@@ -565,7 +567,7 @@ def generate_answer_most(
     if dataset_name == "wmt__test":
         data = list(data.select(range(min(2000, data.num_rows))))
     else:
-        data = list(data.select(range(min(20, data.num_rows))))
+        data = list(data.select(range(min(DEFAULT_SAMPLE_SIZE, data.num_rows))))
 
     # if the path not exists, then create the path
     if not os.path.exists(hidden_state_output_dir):
@@ -952,7 +954,7 @@ def generate_answers(model_type, dataset_name):
         data = data[dataset_name]
 
     # Apply to all datasets
-    data = list(data.select(range(min(20, data.num_rows))))
+    data = list(data.select(range(min(DEFAULT_SAMPLE_SIZE, data.num_rows))))
 
     # if the path not exists, then create the path
     if not os.path.exists(hidden_state_output_dir):
