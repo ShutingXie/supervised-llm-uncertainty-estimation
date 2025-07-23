@@ -81,6 +81,9 @@ def train_supervised_calibration(model_type, dataset_name):
     Y_test = pd.DataFrame(y_test)
     Y_test = Y_test.reset_index(drop=True)
 
+    print('Training set label distribution:', Y_train.value_counts().to_dict())
+    print('Test set label distribution:', Y_test.value_counts().to_dict())
+
     maintain_all_entropies = True
     features_from_saved_list = []
     feature_already_selected_list = []

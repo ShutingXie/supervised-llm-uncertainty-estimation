@@ -46,7 +46,7 @@ from utils.funs_load_model import (
 )
 from utils.generator_cls import MMLUGenerator
 
-DEFAULT_SAMPLE_SIZE = 200  # Global sample size limit, can be modified as needed
+DEFAULT_SAMPLE_SIZE = 1000  # Global sample size limit, can be modified as needed
 
 
 class StopWordStoppingCriteria(StoppingCriteria):
