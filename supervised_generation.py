@@ -812,7 +812,9 @@ def generate_y_most_QA(model_type, dataset_name):
         if "rouge1_most" not in data_extend_rouge[from_idx]:
             calculate_rouge(data_extend_rouge[from_idx], rouge)
 
-        if (from_idx + 1) % 500 == 0:
+        # Adaptive save interval: save every 500 samples, or at the end for small datasets
+        save_interval = min(500, max(10, len(data_extend_rouge) // 4))  # At least 10, at most 500
+        if (from_idx + 1) % save_interval == 0:
 
             # save the data_extend_rouge
             with open(data_extend_path, "w") as fw:
@@ -822,6 +824,11 @@ def generate_y_most_QA(model_type, dataset_name):
             with open(data_extend_path, "w") as fw:
                 json.dump(data_extend_rouge, fw)
             break
+
+    # Final save only if the last sample wasn't saved by the interval
+    if len(data_extend_rouge) % save_interval != 0:
+        with open(data_extend_path, "w") as fw:
+            json.dump(data_extend_rouge, fw)
 
 
 def generate_y_most_WMT(model_type, dataset_name):
@@ -883,7 +890,9 @@ def generate_y_most_WMT(model_type, dataset_name):
         # if metric not in data_extend_rouge[from_idx]:
         calculate_bleu(data_extend_rouge[from_idx])
 
-        if (from_idx + 1) % 500 == 0:
+        # Adaptive save interval: save every 500 samples, or at the end for small datasets
+        save_interval = min(500, max(10, len(data_extend_rouge) // 4))  # At least 10, at most 500
+        if (from_idx + 1) % save_interval == 0:
 
             # save the data_extend_rouge
             with open(data_extend_path, "w") as fw:
@@ -893,6 +902,11 @@ def generate_y_most_WMT(model_type, dataset_name):
             with open(data_extend_path, "w") as fw:
                 json.dump(data_extend_rouge, fw)
             break
+
+    # Final save only if the last sample wasn't saved by the interval
+    if len(data_extend_rouge) % save_interval != 0:
+        with open(data_extend_path, "w") as fw:
+            json.dump(data_extend_rouge, fw)
 
 
 def generate_answers(model_type, dataset_name):
@@ -1406,9 +1420,16 @@ def generate_uncertainty_score(model_type, dataset_name):
             row[SEMANTIC_ENTROPY_KEY] = semantic_entropy
 
         # save the data
-        if (ridx + 1) % 500 == 0:
+        # Adaptive save interval: save every 500 samples, or at the end for small datasets
+        save_interval = min(500, max(10, len(data_with_score) // 4))  # At least 10, at most 500
+        if (ridx + 1) % save_interval == 0:
             with open(save_path, "w") as f:
                 json.dump(data_with_score, f)
+
+    # Final save only if the last sample wasn't saved by the interval
+    if len(data_with_score) % save_interval != 0:
+        with open(save_path, "w") as f:
+            json.dump(data_with_score, f)
 
 
 def generate_query_X_mmlu(model_type, phase):
